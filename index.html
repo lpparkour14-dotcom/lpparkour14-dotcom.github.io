@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fun Web Chat</title>
+<style>
+body { font-family: Arial; background:#f2f2f2; margin:0; padding:0; text-align:center; }
+header { background:#4CAF50; color:white; padding:20px; }
+#chatBox { width:90%; max-width:600px; height:300px; margin:20px auto; background:#fff; border:1px solid #ccc; overflow-y:scroll; padding:10px; text-align:left; }
+input, button { font-size:16px; padding:10px; margin:5px; }
+#username { width:30%; }
+#message { width:50%; }
+</style>
+</head>
+<body>
+
+<header>
+<h1>Fun Web Chat</h1>
+</header>
+
+<div>
+<input type="text" id="username" placeholder="Your fun username">
+<input type="text" id="message" placeholder="Type a message">
+<button onclick="sendMessage()">Send</button>
+</div>
+
+<div id="chatBox"></div>
+
+<script>
+// Keep chat messages in an array (temporary storage in browser)
+let chatMessages = [];
+
+// Function to send a message
+function sendMessage() {
+    const username = document.getElementById('username').value.trim();
+    const message = document.getElementById('message').value.trim();
+    
+    if(username === '' || message === '') {
+        alert('Enter a username and a message!');
+        return;
+    }
+
+    // Add message to chat array
+    chatMessages.push({ user: username, text: message });
+    
+    // Update chat box
+    updateChat();
+
+    // Clear input
+    document.getElementById('message').value = '';
+}
+
+// Function to display chat messages
+function updateChat() {
+    const chatBox = document.getElementById('chatBox');
+    chatBox.innerHTML = ''; // Clear
+    chatMessages.forEach(msg => {
+        const msgDiv = document.createElement('div');
+        msgDiv.innerHTML = `<strong>${msg.user}:</strong> ${msg.text}`;
+        chatBox.appendChild(msgDiv);
+    });
+    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+}
+</script>
+
+</body>
+</html>
